@@ -1,4 +1,7 @@
 # Function to join the points to the buffers
+import geopandas as gpd
+
+
 def rin_stype_buffered(points, buffers):
     """
     Spatially join points to buffers

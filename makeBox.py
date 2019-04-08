@@ -1,4 +1,7 @@
-​class Box(object):
+from shapely import geometry
+
+
+class Box(object):
     def __init__(self, borigin: tuple, bsize: float):
         self.borigin = borigin
         self.bsize = bsize
@@ -9,6 +12,6 @@
         self.ymax = self.borigin[1] + self.bsize
         
     def makebox(self):
-        self.boxgeom = shapely.geometry.box(self.xmin, self.ymin, self.xmax, self.ymax)
+        self.boxgeom = geometry.box(self.xmin, self.ymin, self.xmax, self.ymax)
         self.boxgeom_wkt = self.boxgeom.wkt
         self.centroid_wkt = self.boxgeom.centroid.wkt

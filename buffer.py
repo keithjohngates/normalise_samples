@@ -1,5 +1,6 @@
 # Function to Buffer the points
 
+
 def buffer(data, distance=0.0075, resolution=10):
     """
     Buffer points to return polygons of spatially distinct data sets.

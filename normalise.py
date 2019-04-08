@@ -1,6 +1,9 @@
 import pandas as pd
+from math import log10
+from pysal.esda.mapclassify import Natural_Breaks as nb
 
-class fix_data(object):
+
+class FixData(object):
     """"""
     def __init__(self, df, element):
         self.df = df
@@ -10,8 +13,7 @@ class fix_data(object):
         # Coerce element to numeric values
         self.df[self.element].fillna(0, inplace=True)
         # Coerce element to numeric values
-        self.df[f'{self.element}_nn'] = pd.to_numeric(self.df[self.element])
-
+        self.df['%s_nn' % self.element] = pd.to_numeric(self.df[self.element])
 
     def neg_conversions(self, x):
         # Define the negative conversions
@@ -25,29 +27,29 @@ class fix_data(object):
             return x
         
     def fix_neg(self):
-        self.df[f'{self.element}_fn'] = self.df[self.element].apply(lambda x: self.neg_conversions(x))
+        self.df['%s_fn' % self.element] = self.df[self.element].apply(lambda x: self.neg_conversions(x))
 
     def log(self):
-        self.df[f'{self.element}_log'] = self.df[f'{self.element}_fn'].apply(lambda x: log10(x))
+        self.df['%s_log' % self.element] = self.df['%s_fn' % self.element].apply(lambda x: log10(x))
         
     def threshold(self):
-        median = self.df[f'{self.element}_log'].median()
+        median = self.df['%s_log' % self.element].median()
         # Mean Absolute Deviation: Tukey, J.W., 1977. Exploratory Data Analysis. Addison-Wesley, Reading, 688 pp
-        mad = self.df[f'{self.element}_log'].mad()  
+        mad = self.df['%s_log' % self.element].mad()
         # Set threshold: http://crcleme.org.au/Pubs/guides/gawler/a7_id_anomalies.pdf
         self.threshold = median + 2*mad 
         
     def scaling(self, x):
         # Normalisation of values between 0 and 1
-        min_value = self.df[f'{self.element}_log'].min()
-        x = (x - min_value) / (self.threshold - min_value) # 'Max' value is the threshold 
+        min_value = self.df['%s_log' % self.element].min()
+        x = (x - min_value) / (self.threshold - min_value)  # 'Max' value is the threshold
         return x
         
     def apply_scaling(self):
-        self.df['normalised'] = self.df[f'{self.element}_log'].apply(lambda x: self.scaling(x))
+        self.df['normalised'] = self.df['%s_log' % self.element].apply(lambda x: self.scaling(x))
 
     def natural_breaks(self):
         # Apply hex colours to natural breaks
-        classifier = nb(self.df[self.element], 7) # nb are natural breaks
+        classifier = nb(self.df[self.element], 7)  # nb are natural breaks
         self.df['classifications'] = self.df[self.element].apply(classifier)
-        self.df.classifications.replace([1,2,3,4,5,6,7], ['#82817d','#55b1d9','#5bd955','#e6a94e','#e02d2d','#da2de0','#af00b5'], inplace=True)
+        self.df.classifications.replace([1, 2, 3, 4, 5, 6, 7], ['#82817d', '#55b1d9', '#5bd955', '#e6a94e', '#e02d2d', '#da2de0', '#af00b5'], inplace=True)

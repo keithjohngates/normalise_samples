@@ -1,5 +1,11 @@
-​class makeGrid(object):
-    def __init__(self, samples, gorigin: tuple, cellsize: float, nrows_ncols: tuple, Box, gridname = ''):
+import geopandas as gpd
+from makeBox import Box
+from itertools import product
+from faker import fake
+
+
+class makeGrid(object):
+    def __init__(self, samples, gorigin: tuple, cellsize: float, nrows_ncols: tuple, Box, gridname=''):
         
         self.samples = samples
         assert isinstance(self.samples, gpd.GeoDataFrame)
@@ -16,7 +22,7 @@
         self.gorigin_x = self.gorigin_x - self.cellsize
         self.gorigin_y = self.gorigin_y - self.cellsize
         
-        print(f'Grid cellsize: {self.cellsize}, rows: {self.nrows}, cols: {self.ncols}, Origin: {self.gorigin_x} / {self.gorigin_y}')
+        # print(f'Grid cellsize: {self.cellsize}, rows: {self.nrows}, cols: {self.ncols}, Origin: {self.gorigin_x} / {self.gorigin_y}')
 
     def make_rows(self):
         self.rows = []
@@ -35,7 +41,7 @@
         self.make_rows()
         self.make_cols()
         
-        grid_origins = list(itertools.product(self.rows, self.cols))
+        grid_origins = list(product(self.rows, self.cols))
         
         boxes = []
         colours = []
@@ -49,8 +55,8 @@
         
         grid_origins_dict = {'geometry':  boxes, 'colour': colours}
         
-        self.boxes_gdf = gpd.GeoDataFrame(grid_origins_dict, crs={'init' :'epsg:4283'})
+        self.boxes_gdf = gpd.GeoDataFrame(grid_origins_dict, crs={'init': 'epsg:4283'})
         self.boxes_gdf = self.boxes_gdf.set_geometry('geometry')
         
     def export_geojson(self):
-        self.boxes_gdf.to_file(f'{self.gridname}_boxes.geojson', driver = 'GeoJSON')
+        self.boxes_gdf.to_file('%s_boxes.geojson' % self.gridname, driver='GeoJSON')

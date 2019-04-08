@@ -1,10 +1,11 @@
-# Generator function to subdivide the samples according to rin and sampletype
+# Generator function to subdivide the samples according to rin and sample types
+
 
 def data_divisions(rins):
     """Divide the data
     
     params:
-        Groupby object of samples grouped by rin
+        Group by object of samples grouped by rin
     returns:
         yields a tuple (rin, sampleType, sampleData)"""
     # For each rin...

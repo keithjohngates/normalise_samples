@@ -1,6 +1,9 @@
-​def grid_samples(samples, grid_gdf):
+import geopandas as gpd
+
+
+def grid_samples(samples, grid):
     
-    grid_with_samples = gpd.sjoin(samples, grid_gdf, how="inner", op='intersects')
+    grid_with_samples = gpd.sjoin(samples, grid, how="inner", op='intersects')
     
     max_vals = grid_with_samples.groupby(['index_right']).agg({'normalised': max})
         
@@ -9,5 +12,5 @@
     return max_values_grids
 
 def grid_geojson(max_values_grids, name):
-    max_values_grids.to_file(f'{name}.geojson', driver = 'GeoJSON')
+    max_values_grids.to_file('%s.geojson'% name, driver = 'GeoJSON')
     print('Exported')
