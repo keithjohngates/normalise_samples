@@ -1,5 +1,5 @@
 venv/
 archive/
-data_src/*
+data_src/
 .ipynb_checkpoints/
-data_out/*
+data_out/

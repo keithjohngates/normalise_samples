@@ -1,14 +1,15 @@
 import geopandas as gpd
-from makeBox import Box
+from make_box import MakeBox
 from itertools import product
-from faker import fake
+import faker as fake
 
 
-class makeGrid(object):
+class MakeGrid(object):
     def __init__(self, samples, gorigin: tuple, cellsize: float, nrows_ncols: tuple, Box, gridname=''):
         
         self.samples = samples
         assert isinstance(self.samples, gpd.GeoDataFrame)
+
         self.nrows = nrows_ncols[0]
         self.ncols = nrows_ncols[1]
         
@@ -48,7 +49,7 @@ class makeGrid(object):
         
         for i in grid_origins:
             colour = fake.hex_color()
-            x = Box(i, self.cellsize)
+            x = MakeBox(i, self.cellsize)
             x.makebox()
             boxes.append(x.boxgeom)
             colours.append(colour)

@@ -1,7 +1,7 @@
 # Generator function to subdivide the samples according to rin and sample types
 
 
-def data_divisions(rins):
+def yield_data_divisions(rins):
     """Divide the data
     
     params:

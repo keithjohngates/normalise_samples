@@ -1,4 +1,3 @@
-
 import pandas as pd
 from pysal.viz.mapclassify import Natural_Breaks as nb
 from math import log10
@@ -19,7 +18,7 @@ def neg_conversions(x):
 def scaling(x, min_value, threshold):
     # Normalisation of values between 0 and 1
     
-    x = (x - min_value) / (threshold - min_value) # 'Max' value is the threshold 
+    x = (x - min_value) / (threshold - min_value)  # 'Max' value is the threshold
     return x
 
 

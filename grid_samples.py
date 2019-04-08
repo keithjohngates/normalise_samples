@@ -12,5 +12,5 @@ def grid_samples(samples, grid):
     return max_values_grids
 
 def grid_geojson(max_values_grids, name):
-    max_values_grids.to_file('%s.geojson'% name, driver = 'GeoJSON')
+    max_values_grids.to_file('%s.geojson' % name, driver='GeoJSON')
     print('Exported')

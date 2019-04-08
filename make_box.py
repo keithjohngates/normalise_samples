@@ -1,7 +1,7 @@
 from shapely import geometry
 
 
-class Box(object):
+class MakeBox(object):
     def __init__(self, borigin: tuple, bsize: float):
         self.borigin = borigin
         self.bsize = bsize

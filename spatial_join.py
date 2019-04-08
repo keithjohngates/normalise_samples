@@ -2,7 +2,7 @@
 import geopandas as gpd
 
 
-def rin_stype_buffered(points, buffers):
+def spatial_join(points, buffers):
     """
     Spatially join points to buffers
 

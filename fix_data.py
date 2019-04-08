@@ -1,10 +1,12 @@
 import pandas as pd
 from math import log10
-from pysal.esda.mapclassify import Natural_Breaks as nb
+from pysal.viz.mapclassify import Natural_Breaks as nb
 
 
 class FixData(object):
-    """"""
+    """
+    Fixes the data values and applies scaling
+    """
     def __init__(self, df, element):
         self.df = df
         self.element = element

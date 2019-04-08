@@ -1,4 +1,10 @@
-# Function to convert the single buffer polygons to a GeoDataFrame
+import pandas as pd
+import geopandas as gpd
+
+from faker import Factory
+fake = Factory.create()
+
+
 def sb_attributes(singlebuffer):
     """
     Converts wkt polygon to GeoDataFrame
@@ -10,7 +16,7 @@ def sb_attributes(singlebuffer):
     """
     colour = fake.hex_color()
     
-    # Set a dictonary to build the attributes for the polygon
+    # Set a dictionary to build the attributes for the polygon
     sb_attributes = dict()
     sb_attributes['geometry'] = singlebuffer
     sb_attributes['index'] = [0]
@@ -20,11 +26,12 @@ def sb_attributes(singlebuffer):
     # Covert the dictionary into the GeoDataFrame 
     sb_attributes_df = pd.DataFrame(sb_attributes)
     sb_attributes_gdf = gpd.GeoDataFrame(sb_attributes_df)
-    sb_attributes_gdf.columns={'geometry': 'geometry', 'index': 'index', 'stroke': 'stroke'}
-    sb_attributes_gdf.crs = {'init' :'epsg:4326'}
+    sb_attributes_gdf.columns = {'geometry': 'geometry', 'index': 'index', 'stroke': 'stroke'}
+    sb_attributes_gdf.crs = {'init': 'epsg:4326'}
     
     return sb_attributes_gdf
-	
+
+
 # Function to convert the multi buffers polygons to a GeoDataFrame
 def mb_attributes(multibuffer):
         """
@@ -35,7 +42,7 @@ def mb_attributes(multibuffer):
         returns:
             GeoDataFrame
         """
-        # Set a dictonary to build the attributes for each polygon
+        # Set a dictionary to build the attributes for each polygon
         mb_attributes = dict()
         geometry = []
         index = []
@@ -57,7 +64,7 @@ def mb_attributes(multibuffer):
         # Covert the dictionary into the GeoDataFrame 
         mb_attributes_df = pd.DataFrame(mb_attributes)
         mb_attributes_gdf = gpd.GeoDataFrame(mb_attributes_df)
-        mb_attributes_gdf.columns={'geometry': 'geometry', 'index': 'index', 'stroke': 'stroke'}
-        mb_attributes_gdf.crs = {'init' :'epsg:4326'}
+        mb_attributes_gdf.columns = {'geometry': 'geometry', 'index': 'index', 'stroke': 'stroke'}
+        mb_attributes_gdf.crs = {'init': 'epsg:4326'}
         
         return mb_attributes_gdf

@@ -17,4 +17,4 @@ def cell_rows_cols(samples, cell_size):
     nrows = int(nrows.round()) 
     ncols = int(ncols.round())
     
-    return [(xmin, ymin), (nrows +1, ncols +1)]
+    return [(xmin, ymin), (nrows + 1, ncols + 1)]

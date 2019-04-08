@@ -9,6 +9,7 @@ def process_pickle(f):
         group = pickle.load(fin)
         print('opened: %s' % f)
         print(type(group))
+
         lensubset = calc_normalisation(group, f)
 
 
