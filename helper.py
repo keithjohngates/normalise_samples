@@ -1,3 +1,10 @@
+import pandas as pd
+import geopandas as gpd
+from faker import Factory
+
+fake = Factory.create()
+
+
 # Function to Buffer the points
 def buffer(data, distance=0.0075, resolution=10):
     """
@@ -29,6 +36,7 @@ def spatial_join(points, buffers):
     points_buffered.drop(['index_right'], axis=1)
     return points_buffered
 
+
 # Function to convert the single buffer polygons to a GeoDataFrame
 def sb_attributes(singlebuffer):
     """
@@ -55,7 +63,8 @@ def sb_attributes(singlebuffer):
     sb_attributes_gdf.crs = {'init' :'epsg:4326'}
     
     return sb_attributes_gdf
-	
+
+
 # Function to convert the multi buffers polygons to a GeoDataFrame
 def mb_attributes(multibuffer):
         """
@@ -92,7 +101,8 @@ def mb_attributes(multibuffer):
         mb_attributes_gdf.crs = {'init' :'epsg:4326'}
         
         return mb_attributes_gdf
-		
+
+
 # Function to join the points to the buffers
 def rin_stype_buffered(points, buffers):
     """
@@ -107,7 +117,8 @@ def rin_stype_buffered(points, buffers):
     points_buffered = gpd.sjoin(points, buffers, how="inner", op='intersects')
     points_buffered.drop(['index_right'], axis=1)
     return points_buffered
-	
+
+
 # Generator function to subdivide the samples according to rin and sampletype
 def data_divisions(rins):
     """Divide the data
