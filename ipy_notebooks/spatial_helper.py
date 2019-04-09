@@ -6,7 +6,7 @@ fake = Factory.create()
 
 
 # Function to Buffer the points
-def buffering(data, distance=250, resolution=10):
+def buffering(data, distance=2500, resolution=10):
     """
     Buffer points to return polygons of spatially distinct data sets.
 

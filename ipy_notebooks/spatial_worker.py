@@ -1,4 +1,4 @@
-import helper
+import spatial_helper
 import pandas as pd
 import geopandas as gpd
 import os
@@ -15,10 +15,10 @@ def spatial_worker(rins_sub, index):
 	
 	dsfolder = os.path.join(os.path.dirname(os.getcwd()), 'data_src')
 	
-	for rin, stype, subsamples in helper.data_divisions(rins_sub):
+	for rin, stype, subsamples in spatial_helper.data_divisions(rins_sub):
 		
 		# We buffer all the samples
-		buffers = helper.buffering(subsamples)
+		buffers = spatial_helper.buffering(subsamples)
 		
 		print(rin, stype, len(subsamples), buffers.geom_type)
 		
@@ -27,7 +27,7 @@ def spatial_worker(rins_sub, index):
 		if buffers.geom_type == 'Polygon':
 			
 			# For each of the single wkt polygons convert to a dataframe (adding attributes)
-			_df = helper.sb_attributes(buffers)
+			_df = spatial_helper.sb_attributes(buffers)
 			assert isinstance(_df, gpd.GeoDataFrame)
 
 			# Aggregate the buffers
@@ -42,7 +42,7 @@ def spatial_worker(rins_sub, index):
 		if buffers.geom_type == 'MultiPolygon':
 			
 			# Split the Multipolygon wkt to dataframe
-			_mdf = helper.mb_attributes(buffers)
+			_mdf = spatial_helper.mb_attributes(buffers)
 
 			# Set empty frames to collect the subdivided sets
 			multisamples = gpd.GeoDataFrame()
@@ -70,3 +70,5 @@ def spatial_worker(rins_sub, index):
 			
 	with open(os.path.join(dsfolder, 'rpt_spatial_sub_%s.pickle' % index), 'wb') as f:
 		pickle.dump(all_buffered_samples, f, pickle.HIGHEST_PROTOCOL)
+	with open(os.path.join(dsfolder, 'rpt_spatial_sub_buffers_%s.pickle' % index), 'wb') as f:
+		pickle.dump(all_buffers, f, pickle.HIGHEST_PROTOCOL)
