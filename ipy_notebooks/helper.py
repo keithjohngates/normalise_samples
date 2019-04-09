@@ -6,7 +6,7 @@ fake = Factory.create()
 
 
 # Function to Buffer the points
-def buffer(data, distance=0.0075, resolution=10):
+def buffering(data, distance=0.0075, resolution=10):
     """
     Buffer points to return polygons of spatially distinct data sets.
 
@@ -104,7 +104,7 @@ def mb_attributes(multibuffer):
 
 
 # Function to join the points to the buffers
-def rin_stype_buffered(points, buffers):
+def samples_buffered(points, buffers):
     """
     Spatially join points to buffers
 
