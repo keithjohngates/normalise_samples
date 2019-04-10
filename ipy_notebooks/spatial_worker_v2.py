@@ -13,7 +13,7 @@ def spatial_worker(rins_sub, index):
 	
 	total_samples = 0
 	
-	data_out = os.path.join(os.path.dirname(os.getcwd()), 'data_out')
+	dsfolder = os.path.join(os.path.dirname(os.getcwd()), 'data_src')
 	
 	for rin, stype, subsamples in spatial_helper.data_divisions(rins_sub):
 		
@@ -67,10 +67,8 @@ def spatial_worker(rins_sub, index):
 			
 			# Watch it grow
 			print(f'\nCaptured samples: {total_samples} of {len(all_buffered_samples)}\n')
-
-	
-	with open(os.path.join(data_out, 'samples_buffered_%s.pickle' % index), 'wb') as f:
+			
+	with open(os.path.join(dsfolder, 'rpt_spatial_sub_%s.pickle' % index), 'wb') as f:
 		pickle.dump(all_buffered_samples, f, pickle.HIGHEST_PROTOCOL)
-		
-	with open(os.path.join(data_out, 'buffers_%s.pickle' % index), 'wb') as f:
+	with open(os.path.join(dsfolder, 'rpt_spatial_sub_buffers_%s.pickle' % index), 'wb') as f:
 		pickle.dump(all_buffers, f, pickle.HIGHEST_PROTOCOL)

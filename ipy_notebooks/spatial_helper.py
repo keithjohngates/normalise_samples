@@ -4,7 +4,6 @@ from faker import Factory
 
 fake = Factory.create()
 
-
 # Function to Buffer the points
 def buffering(data, distance=2500, resolution=10):
     """
