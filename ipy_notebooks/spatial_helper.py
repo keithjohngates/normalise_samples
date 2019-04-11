@@ -53,6 +53,8 @@ def sb_attributes(singlebuffer):
     sb_attributes['geometry'] = singlebuffer
     sb_attributes['index'] = [0]
     sb_attributes['stroke'] = [colour]
+    # sb_attributes['rin'] = rin
+    # sb_attributes['stype'] = stype
     # TODO add the RIN as a tooltip
     
     # Covert the dictionary into the GeoDataFrame 
@@ -79,19 +81,25 @@ def mb_attributes(multibuffer):
         geometry = []
         index = []
         stroke = []
-    
+        # rin = []
+        # stype = []
+		
         # Loop over each polygon in the MultiPolygon
         for idx, b in enumerate(multibuffer):
             colour = fake.hex_color()
             stroke.append(colour)
             geometry.append(b)
             index.append(idx)
+            # rin.append(rin)
+            # stype.append(stype)
             # TODO add the RIN as a tooltip
 
             # Populate the dictionary
             mb_attributes['geometry'] = geometry
             mb_attributes['index'] = index
             mb_attributes['stroke'] = stroke
+            # mb_attributes['rin'] = [rin]
+            # mb_attributes['stype'] = [stype]
             
         # Covert the dictionary into the GeoDataFrame 
         mb_attributes_df = pd.DataFrame(mb_attributes)

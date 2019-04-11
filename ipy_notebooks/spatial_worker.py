@@ -4,17 +4,19 @@ import geopandas as gpd
 import os
 import pickle
 
-# Counter to check the output is valid
+
 def spatial_worker(rins_sub, index):
 	all_buffers = gpd.GeoDataFrame()
 	sbuffered_samples = gpd.GeoDataFrame()
 	mbuffered_samples = gpd.GeoDataFrame()
 	all_buffered_samples = gpd.GeoDataFrame()
 	
+	# Counter to check the output is valid
 	total_samples = 0
 	
 	data_out = os.path.join(os.path.dirname(os.getcwd()), 'data_out')
 	
+	# groupby each groupby !
 	for rin, stype, subsamples in spatial_helper.data_divisions(rins_sub):
 		
 		# We buffer all the samples
@@ -28,6 +30,10 @@ def spatial_worker(rins_sub, index):
 			
 			# For each of the single wkt polygons convert to a dataframe (adding attributes)
 			_df = spatial_helper.sb_attributes(buffers)
+			
+			_df['rin'] = rin
+			_df['stype'] = stype
+			
 			assert isinstance(_df, gpd.GeoDataFrame)
 
 			# Aggregate the buffers
@@ -43,6 +49,9 @@ def spatial_worker(rins_sub, index):
 			
 			# Split the Multipolygon wkt to dataframe
 			_mdf = spatial_helper.mb_attributes(buffers)
+			
+			_mdf['rin'] = rin
+			_mdf['stype'] = stype
 
 			# Set empty frames to collect the subdivided sets
 			multisamples = gpd.GeoDataFrame()
